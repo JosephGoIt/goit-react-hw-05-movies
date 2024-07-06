@@ -1,5 +1,6 @@
 .movieDetails {
     border-top-style: double;
+    border-color: lightslategrey;
     display: block;
     padding: 10px;
 }
@@ -20,5 +21,6 @@
 .castNav {
     border-top-style: double;
     border-bottom-style: double;
+    border-color: lightslategrey;
     padding: 10px;
 }
