@@ -1,4 +1,63 @@
-.load-more {
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    background: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+  }
+  
+  nav li {
+    margin: 0 10px;
+  }
+  
+  nav button {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  nav button:hover {
+    text-decoration: underline;
+  }
+  
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px;
+  }
+  
+  .card {
+    margin: 10px;
+    cursor: pointer;
+  }
+  
+  .card_img {
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+  }
+  
+  .card_title {
+    text-align: center;
+    margin: 5px 0;
+  }
+  
+  .load-more {
     text-align: center;
     margin: 20px 0;
   }
@@ -7,4 +66,50 @@
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+  }
+  
+  .scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .scroll-to-top--hidden {
+    display: none;
+  }
+  
+  .movie-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  .movie-modal img {
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+  }
+  
+  .movie-details {
+    text-align: center;
+  }
+  
+  .movie-navigation {
+    margin: 20px 0;
+  }
+  
+  .movie-navigation button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .movie-section {
+    margin: 20px;
   }
