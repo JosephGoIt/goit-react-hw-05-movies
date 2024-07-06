@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import { Link, useNavigate } from 'react-router-dom';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import MovieCard from './MovieCard';
 import LoadMore from './LoadMore';
 import useFetch from './hooks/useFetch';
