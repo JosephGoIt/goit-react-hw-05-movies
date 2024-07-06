@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import { Link, useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import MovieCard from './MovieCard';
 import LoadMore from './LoadMore';
 import useFetch from './hooks/useFetch';
@@ -16,7 +16,21 @@ const Movies = () => {
   const [searchUrl, setSearchUrl] = useState('');
   const { setModalData } = usePageContext();
   const { data: searchResults, loading, error } = useFetch(searchUrl);
-//   const navigate = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const queryParam = params.get('query');
+    const pageParam = params.get('page');
+
+    if (queryParam) {
+      setQuery(queryParam);
+      setCurrentPage(parseInt(pageParam) || 1);
+      setSearchUrl(`${IMDB_URL}/3/search/movie?api_key=${IMDB_API_KEY}&query=${queryParam}&language=en-US&page=${pageParam || 1}&include_adult=false`);
+    }
+  }, [location.search]);
 
   useEffect(() => {
     if (searchResults) {
@@ -27,18 +41,25 @@ const Movies = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     setCurrentPage(1);
-    setSearchUrl(`${IMDB_URL}/3/search/movie?api_key=${IMDB_API_KEY}&query=${query}&language=en-US&page=1&include_adult=false`);
+    const newSearchUrl = `${IMDB_URL}/3/search/movie?api_key=${IMDB_API_KEY}&query=${query}&language=en-US&page=1&include_adult=false`;
+    setSearchUrl(newSearchUrl);
+    navigate(`/movies?query=${query}&page=1`);
   };
 
   const handleLoadMore = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
+    const newPage = currentPage + 1;
+    setCurrentPage(newPage);
+    const newSearchUrl = `${IMDB_URL}/3/search/movie?api_key=${IMDB_API_KEY}&query=${query}&language=en-US&page=${newPage}&include_adult=false`;
+    setSearchUrl(newSearchUrl);
+    navigate(`/movies?query=${query}&page=${newPage}`);
   };
 
-  useEffect(() => {
-    if (query) {
-      setSearchUrl(`${IMDB_URL}/3/search/movie?api_key=${IMDB_API_KEY}&query=${query}&language=en-US&page=${currentPage}&include_adult=false`);
-    }
-  }, [currentPage, query]);
+  const handleMovieClick = (movieId) => {
+    const state = { query, currentPage };
+    console.log('Saving state to localStorage:', state);
+    localStorage.setItem('moviesState', JSON.stringify(state));
+    navigate(`/movies/${movieId}`);
+  };
 
   return (
     <div className="movies">
@@ -55,9 +76,9 @@ const Movies = () => {
       {error && <p>Error loading movies.</p>}
       <div className="gallery">
         {searchResults && searchResults.results.map(movie => (
-          <Link key={movie.id} to={`/movies/${movie.id}`} state={{ from: '/movies' }}>
+          <div key={movie.id} onClick={() => handleMovieClick(movie.id)}>
             <MovieCard movie={movie} setModalData={setModalData} />
-          </Link>
+          </div>
         ))}
       </div>
       {searchResults && searchResults.results.length > 0 && (
