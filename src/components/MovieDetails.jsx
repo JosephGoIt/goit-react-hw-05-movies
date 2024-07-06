@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useParams, Outlet } from 'react-router-dom';
+import { Link, useParams, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import useFetch from './hooks/useFetch';
 import { usePageContext } from './context/PageContext';
 import styles from './MovieDetails.module.css';
@@ -9,9 +9,11 @@ const IMDB_URL = 'https://api.themoviedb.org';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
-  const { modalData, setModalData } = usePageContext();
+  const { setModalData } = usePageContext();
   const movieDetailsUrl = `${IMDB_URL}/3/movie/${movieId}?api_key=${IMDB_API_KEY}&append_to_response=credits,reviews`;
   const { data: movie, loading, error } = useFetch(movieDetailsUrl);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   React.useEffect(() => {
     if (movie) {
@@ -24,27 +26,44 @@ const MovieDetails = () => {
 
   const genres = movie.genres ? movie.genres.map(genre => genre.name).join(', ') : '';
 
+  const handleGoBack = () => {
+    if (location.state && location.state.from) {
+      navigate(location.state.from);
+    } else {
+      navigate('/');
+    }
+  };
+
   return (
-    <div className={styles.movieContainer}>
-      <div>
-        <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
-      </div>
-      <div>
-        <h2>{movie.title} ({movie.release_date})</h2>
-        {/* <p>Vote: {movie.vote_average}</p> */}
-        {/* <p>Votes: {movie.vote_count}</p> */}
-        <p>Popularity: {movie.popularity}</p>
-        <p>Original Title: {movie.original_title}</p>
-        <p>Overview: {movie.overview}</p>
-        <p>Genres: {genres}</p>
-        {/* <p>Release Date: {movie.release_date}</p> */}
-      </div>
-      <nav>
-        <Link to="cast">Cast</Link>
-        <br></br>
-        <Link to="reviews">Reviews</Link>
-      </nav>
-      <Outlet />
+    <div className={styles.movieDetails}>
+        <div className={styles.btnOverview}>
+            <div className={styles.btnImg}>
+                <button className={styles.goBack} onClick={handleGoBack}>Go Back</button>
+                <img className={styles.movieImg} src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} alt={movie.title} />
+            </div>
+            <div className={styles.movieOverview}>
+                <h2>{movie.title}</h2>
+                {/* <p>Vote: {movie.vote_average}</p> */}
+                {/* <p>Votes: {movie.vote_count}</p> */}
+                <p>Popularity: {movie.popularity}</p>
+                {/* <p>Original Title: {movie.original_title}</p> */}
+                <h4>Genres:</h4>
+                <p>{genres}</p>
+                <h4>Overview:</h4>
+                <p>{movie.overview}</p>
+                <h4>Release Date:</h4>
+                <p>{movie.release_date}</p>
+            </div>
+        </div>
+        <nav className={styles.castNav}>
+            <h4>Additional Information</h4>
+            <Link to="cast">Cast</Link>
+            <br></br>
+            <Link to="reviews">Reviews</Link>
+        </nav>
+        <div className={styles.castNavOutlet}>
+            <Outlet />
+        </div>
     </div>
   );
 };
