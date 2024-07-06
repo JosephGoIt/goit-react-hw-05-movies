@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link, useParams, Outlet, useNavigate, useLocation } from 'react-router-dom';
+// import { Link, useParams, Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useParams, Outlet, useNavigate } from 'react-router-dom';
 import useFetch from './hooks/useFetch';
 import { usePageContext } from './context/PageContext';
 import styles from './MovieDetails.module.css';
@@ -13,7 +14,7 @@ const MovieDetails = () => {
   const movieDetailsUrl = `${IMDB_URL}/3/movie/${movieId}?api_key=${IMDB_API_KEY}&append_to_response=credits,reviews`;
   const { data: movie, loading, error } = useFetch(movieDetailsUrl);
   const navigate = useNavigate();
-  const location = useLocation();
+//   const location = useLocation();
 
   React.useEffect(() => {
     if (movie) {
