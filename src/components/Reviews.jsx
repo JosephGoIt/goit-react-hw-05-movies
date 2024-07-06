@@ -16,13 +16,17 @@ const Reviews = () => {
   return (
     <div className="reviews">
       <h3>Reviews</h3>
-      <ul>
-        {reviews.results.map(review => (
-          <li key={review.id}>
-            <p>{review.author}: {review.content}</p>
-          </li>
-        ))}
-      </ul>
+      {reviews.results.length > 0 ? (
+        <ul>
+          {reviews.results.map(review => (
+            <li key={review.id}>
+              <p><strong>{review.author}</strong>: {review.content}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No review yet</p>
+      )}
     </div>
   );
 };

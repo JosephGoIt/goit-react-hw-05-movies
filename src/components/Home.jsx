@@ -21,6 +21,9 @@ const Home = () => {
     if (trendingMovies) {
       setTotalPages(trendingMovies.total_pages);
     }
+    return () => {
+        localStorage.removeItem('moviesState');
+      };
   }, [trendingMovies]);
 
   const handleLoadMore = () => {

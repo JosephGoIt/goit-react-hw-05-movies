@@ -27,8 +27,10 @@ const MovieDetails = () => {
   const genres = movie.genres ? movie.genres.map(genre => genre.name).join(', ') : '';
 
   const handleGoBack = () => {
-    if (location.state && location.state.from) {
-      navigate(location.state.from);
+    const moviesState = JSON.parse(localStorage.getItem('moviesState'));
+    if (moviesState) {
+      const { query, currentPage } = moviesState;
+      navigate(`/movies?query=${query}&page=${currentPage}`);
     } else {
       navigate('/');
     }
