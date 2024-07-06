@@ -15,7 +15,7 @@ const MovieCard = ({ movie, setModalData }) => {
       <p className="card_title">
         {movie.title} <br />
         <span className="card_text">
-          {movie.genre_ids.join(', ')} | {movie.release_date}
+          {movie.release_date}
         </span>
       </p>
     </div>

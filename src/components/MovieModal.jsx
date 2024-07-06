@@ -11,7 +11,6 @@ const MovieModal = ({ movie, setModalData }) => {
     original_title,
     genres,
     overview,
-    release_date,
   } = movie;
 
   const posterUrl = `https://image.tmdb.org/t/p/w500${poster_path}`;

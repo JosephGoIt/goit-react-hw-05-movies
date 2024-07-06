@@ -1,3 +1,24 @@
-.movieContainer {
-    flex-wrap: nowrap;
+.movieDetails {
+    border-top-style: double;
+    display: block;
+    padding: 10px;
+}
+
+.btnOverview {
+    display: flex;
+}
+
+.movieImg {
+    margin-top: 10px;
+}
+
+.movieOverview {
+    margin: 10px;
+    align-content: space-around;
+}
+
+.castNav {
+    border-top-style: double;
+    border-bottom-style: double;
+    padding: 10px;
 }
